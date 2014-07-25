@@ -6,7 +6,7 @@ end
 
 describe Cezanne do
 
-  before(:all) do 
+  before(:all) do
 
     @dummy = Dummy.new
     @dummy.extend Cezanne
@@ -22,7 +22,7 @@ describe Cezanne do
 
   end
 
-  before(:each) do 
+  before(:each) do
 
     @page = double('page')
     driver = double('driver')
@@ -33,19 +33,31 @@ describe Cezanne do
 
   end
 
-  it '#check_visual_regression_for, successful' do
-    FileUtils.cp('spec/saintevictoire_1.gif', File.join(@dummy.local_files.path_for(:ref), 'saintevictoire_success.gif'))
-    allow(@page.driver.browser).to receive('browser').and_return(:success)
-    allow(@page.driver.browser).to receive('save_screenshot').and_return(FileUtils.cp('spec/saintevictoire_1.gif', File.join(@dummy.local_files.path_for(:tmp), 'saintevictoire_success.gif')))
-    @dummy.check_visual_regression_for 'saintevictoire'
+  context 'succesful match' do
+
+    before(:each) do 
+      FileUtils.cp('spec/saintevictoire_1.gif', File.join(@dummy.local_files.path_for(:ref), 'saintevictoire_success.gif'))
+      allow(@page.driver.browser).to receive('browser').and_return(:success)
+      allow(@page.driver.browser).to receive('save_screenshot').and_return(FileUtils.cp('spec/saintevictoire_1.gif', File.join(@dummy.local_files.path_for(:tmp), 'saintevictoire_success.gif')))
+    end
+
+    it '#check_visual_regression_for' do
+      expect { @dummy.check_visual_regression_for 'saintevictoire' }.not_to raise_error
+    end
+
   end
 
+  context 'failed match' do
 
-  it '#check_visual_regression_for, failure' do
-    FileUtils.cp('spec/saintevictoire_1.gif', File.join(@dummy.local_files.path_for(:ref), 'saintevictoire_fail.gif'))
-    allow(@page.driver.browser).to receive('browser').and_return(:fail)
-    allow(@page.driver.browser).to receive('save_screenshot').and_return(FileUtils.cp('spec/saintevictoire_2.gif', File.join(@dummy.local_files.path_for(:tmp), 'saintevictoire_fail.gif')))
-    @dummy.check_visual_regression_for 'saintevictoire'
+    before(:each) do
+      FileUtils.cp('spec/saintevictoire_1.gif', File.join(@dummy.local_files.path_for(:ref), 'saintevictoire_fail.gif'))
+      allow(@page.driver.browser).to receive('browser').and_return(:fail)
+      allow(@page.driver.browser).to receive('save_screenshot').and_return(FileUtils.cp('spec/saintevictoire_2.gif', File.join(@dummy.local_files.path_for(:tmp), 'saintevictoire_fail.gif')))
+    end
+
+    it '#check_visual_regression_for' do
+      expect { @dummy.check_visual_regression_for('saintevictoire') }.to raise_error(/didn't match/)
+    end
+
   end
-
 end

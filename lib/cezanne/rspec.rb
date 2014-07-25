@@ -27,10 +27,14 @@ RSpec.configure do |config|
 
 end
 
-def local_files
-  RSpec.configuration.cezanne[:local_files]
-end
+module Cezanne
 
-def remote_files
-  RSpec.configuration.cezanne[:remote_files]
+  def local_files
+    RSpec.configuration.cezanne[:local_files]
+  end
+
+  def remote_files
+    RSpec.configuration.cezanne[:remote_files]
+  end
+
 end

@@ -7,13 +7,6 @@ module Cezanne
 
   SIMILARITY_THRESHOLD = 42
 
-  def self.init uid, local_base_path = 'artifacts', remote_base_path = 'cezanne'
-    @local_files = Cezanne::LocalFiles.new uid, local_base_path
-    @remote_files = Cezanne::RemoteFiles.new uid, remote_base_path
-    @remote_files.pull(:ref, @local_files.path_for(:ref))
-  end
-
-
   def self.push_and_clean
     [:new, :diff].each do |key|
       remote_files.push(local_files.path_for(key), key)
@@ -32,9 +25,10 @@ module Cezanne
 
     if spot_differences_between screenshot, reference_screenshot
       mark_for_review screenshot
-      fail "screenshot for #{page_name} didn't match"
+      raise "screenshot for #{page_name} didn't match"
     end
 
+    return true
   end
 
   def take_screenshot page_name
@@ -51,7 +45,9 @@ module Cezanne
   end
 
   def spot_differences_between this, that
-    # crop to same size
+    width = [this.width, that.width].min
+    height = [this.height, that.height].min
+    [this, that].each { |img| img.crop!(width, height) }
     this.picture.compare_channel(that.picture, Magick::PeakSignalToNoiseRatioMetric)[1] < SIMILARITY_THRESHOLD
   end
 
