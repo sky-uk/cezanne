@@ -2,9 +2,6 @@ module Cezanne
 
   class LocalFiles
 
-    attr_reader :folders
-
-
     def initialize uid, base_path
 
       @folders = {
