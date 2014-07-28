@@ -33,6 +33,14 @@ describe Cezanne do
 
   end
 
+  it '#take_screenshot' do 
+    expect(page.driver.browser).to receive('save_screenshot').with(/saintevictoire/)
+    
+  end
+
+
+
+
   context 'succesful match' do
 
     before(:each) do 
@@ -60,4 +68,6 @@ describe Cezanne do
     end
 
   end
+
+ 
 end

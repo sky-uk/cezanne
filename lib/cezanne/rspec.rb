@@ -16,12 +16,15 @@ RSpec.configure do |config|
       rescue 
         puts "no reference screenshot exist for project #{project_name}"
       end
-      end
+    end
   end
 
   config.after(:all) do
     if self.class.include?(Cezanne)
-      Cezanne.push_and_clean
+      [:new, :diff].each do |key|
+        config.cezanne[:remote_files].push(cezanne.config[:local_files].path_for(key), key)
+      end
+      cezanne.config[:local_files].clean
     end
   end
 
