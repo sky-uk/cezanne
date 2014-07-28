@@ -36,7 +36,7 @@ describe Cezanne::LocalFiles do
   end
   
   after(:each) do
-    FileUtils.rm_rf 'spec/artifacts/local_files_test'
+    FileUtils.rm_rf 'spec/artifacts'
   end
 
 end

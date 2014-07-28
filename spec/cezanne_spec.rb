@@ -18,7 +18,7 @@ describe Cezanne do
     allow(browser).to receive('save_screenshot')
     allow(driver).to receive('browser').and_return(browser)
     allow(page).to receive('driver').and_return(driver)
-    allow(local_files).to receive('path_for').and_return('spec/artifacts')
+    allow(local_files).to receive('path_for').and_return('spec/images')
     allow(class_with_cezanne).to receive('page').and_return(page)
     allow(class_with_cezanne).to receive('local_files').and_return(local_files) 
     allow(class_with_cezanne).to receive('image').and_return(image)
@@ -102,17 +102,17 @@ describe Cezanne do
     let(:screenshot) { image }
 
     before(:each) do
-      allow(image).to receive('path').and_return('spec/artifacts/page_name_browser.gif')    
+      allow(image).to receive('path').and_return('spec/images/page_name_browser.gif')    
     end 
 
     it 'moves screenshot to the diff folder' do
-      expect(local_files).to receive('path_for').with(:diff).and_return('spec/artifacts/different.gif')
+      expect(local_files).to receive('path_for').with(:diff).and_return('spec/images/different.gif')
       class_with_cezanne.send(:mark_for_review, screenshot)
-      expect(File.exists?('spec/artifacts/different.gif')).to be true
+      expect(File.exists?('spec/images/different.gif')).to be true
     end
 
     after(:each) do
-      FileUtils.mv('spec/artifacts/different.gif', 'spec/artifacts/page_name_browser.gif')
+      FileUtils.mv('spec/images/different.gif', 'spec/images/page_name_browser.gif')
     end
 
   end
@@ -123,30 +123,44 @@ describe Cezanne do
     let(:screenshot) { image }
 
     before(:each) do
-      allow(image).to receive('path').and_return('spec/artifacts/page_name_browser.gif')    
+      allow(image).to receive('path').and_return('spec/images/page_name_browser.gif')    
     end 
 
     it 'moves screenshot to the new folder' do
-      expect(local_files).to receive('path_for').with(:new).and_return('spec/artifacts/new.gif')
+      expect(local_files).to receive('path_for').with(:new).and_return('spec/images/new.gif')
       class_with_cezanne.send(:mark_as_new, screenshot)
-      expect(File.exists?('spec/artifacts/new.gif')).to be true
+      expect(File.exists?('spec/images/new.gif')).to be true
     end
 
     after(:each) do
-      FileUtils.mv('spec/artifacts/new.gif', 'spec/artifacts/page_name_browser.gif')
+      FileUtils.mv('spec/images/new.gif', 'spec/images/page_name_browser.gif')
     end
 
   end
+
+  describe '#image' do
+    
+    before(:each) do
+      allow(class_with_cezanne).to receive('image').and_call_original      
+    end
+
+    it 'return a Cezanne::Image' do
+      path = 'spec/images/page_name_browser.gif'
+      expect(class_with_cezanne.send(:image, path)).to be_instance_of(Cezanne::Image)
+    end
+    
+  end
+
   describe '#check_visual_regression_for' do
 
     before(:each) do
-      allow(class_with_cezanne).to receive('get_reference_screenshot_for').and_return(Cezanne::Image.new('spec/artifacts/page_name_browser.gif'))
+      allow(class_with_cezanne).to receive('get_reference_screenshot_for').and_return(Cezanne::Image.new('spec/images/page_name_browser.gif'))
     end
 
     context 'succesful match' do
 
       it 'does not raise an error' do
-        allow(class_with_cezanne).to receive('take_screenshot').and_return(Cezanne::Image.new('spec/artifacts/page_name_browser.gif'))
+        allow(class_with_cezanne).to receive('take_screenshot').and_return(Cezanne::Image.new('spec/images/page_name_browser.gif'))
         expect { class_with_cezanne.check_visual_regression_for 'page_name' }.not_to raise_error
       end
 
@@ -154,7 +168,7 @@ describe Cezanne do
 
     context 'failed match' do
 
-      let(:screenshot) { Cezanne::Image.new('spec/artifacts/page_name_2_browser.gif') }
+      let(:screenshot) { Cezanne::Image.new('spec/images/page_name_2_browser.gif') }
 
       before(:each) do
         allow(class_with_cezanne).to receive('take_screenshot').and_return(screenshot)
@@ -176,7 +190,7 @@ describe Cezanne do
 
     context 'new screenshot' do 
 
-      let(:screenshot) { Cezanne::Image.new('spec/artifacts/page_name_browser.gif') }
+      let(:screenshot) { Cezanne::Image.new('spec/images/page_name_browser.gif') }
 
       before(:each) do
         allow(class_with_cezanne).to receive('get_reference_screenshot_for').and_return(false)
