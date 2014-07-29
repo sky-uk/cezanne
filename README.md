@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/bskyb-commerce/cezanne.svg?branch=master)](https://travis-ci.org/bskyb-commerce/cezanne)
+
 # Cezanne
 
 Visual regression testing tool
@@ -23,8 +25,8 @@ In your spec_helper.rb
     require 'cezanne/rspec'
     
     RSpec.configure do |config|
-        config.include Cezanne
-        config.cezanne = { uid: ENV['build_number'], project_name: 'awesome_app' }
+      config.include Cezanne
+      config.cezanne = { uid: ENV['build_number'], project_name: 'awesome_app' }
     end
 
 The uid should be a unique identifier. We use the build number, but it can be a static string if you don't need
