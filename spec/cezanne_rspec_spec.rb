@@ -12,7 +12,7 @@ RSpec.configure do |config|
   config.cezanne = { uid: 'test', project_name: 'cezanne' }
 end
 
-describe 'Cezanne RSpec integration', type: :feature, screenshots: true do
+describe 'Cezanne RSpec integration', type: :feature, screenshots: true, integration: true do
  
   # wrap each test with before(:all) and after(:all) 
 
