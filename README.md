@@ -32,13 +32,16 @@ to keep multiple versions of the screenshots.
 
 In your tests
 
-    it 'still is a masterpiece' do
-        visit 'url-to-masterpiece'
-        check_visual_regression_for 'masterpiece'
+    
+    describe 'Mont Sainte-Victoire', screenshots: true do
+      it 'is a masterpiece' do
+        visit 'url-to-painting'
+        check_visual_regression_for 'mont-sainte-victoire'
+      end
     end
 
 Make sure to use a unique name for each screenshot. 
-The associate file will be a gif image named after the parameter ('masterpiece' in the example above)
+The associate file will be a gif image named after the parameter ('mont-sainte-victoire' in the example above)
 and the browser name, to make it easy to check visual regressions on multiple browsers.
 
 ## Dependencies
