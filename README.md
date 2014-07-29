@@ -48,6 +48,8 @@ and the browser name, to make it easy to check visual regressions on multiple br
 
 ## Dependencies
 
+Cezanne uses ImageMagick to compare images. Check with your package manager.
+
 Screenshots are stored on Dropbox through the Dropscreen gem. Follow the instructions at https://github.com/bskyb-commerce/dropscreen and make sure to export the access_token
 
     export DROPBOX_ACCESS_TOKEN=**insert dropbox access token here**
