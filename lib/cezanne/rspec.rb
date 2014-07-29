@@ -5,7 +5,7 @@ RSpec.configure do |config|
 
   config.add_setting :cezanne
 
-  config.before(:all) do
+  config.before(:all, screenshots: true) do
     if self.class.include?(Cezanne)
       uid = config.cezanne[:uid]
       project_name = config.cezanne[:project_name]
@@ -19,12 +19,12 @@ RSpec.configure do |config|
     end
   end
 
-  config.after(:all) do
+  config.after(:all, screenshots: true) do
     if self.class.include?(Cezanne)
       [:new, :diff].each do |key|
-        config.cezanne[:remote_files].push(cezanne.config[:local_files].path_for(key), key)
+        config.cezanne[:remote_files].push(config.cezanne[:local_files].path_for(key), key)
       end
-      cezanne.config[:local_files].clean
+      config.cezanne[:local_files].clean
     end
   end
 
