@@ -44,7 +44,7 @@ In your tests
 
 Make sure to use a unique name for each screenshot. 
 The associate file will be a gif image named after the parameter ('mont-sainte-victoire' in the example above)
-and the browser name, to make it easy to check visual regressions on multiple browsers.
+and the browser name & version, to make it easy to check visual regressions on multiple browsers.
 
 ## Dependencies
 

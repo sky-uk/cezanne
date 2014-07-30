@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Cezanne::Image do
 
-  let(:image) { Cezanne::Image.new('spec/images/page_name_browser.gif') }
+  let(:image) { Cezanne::Image.new('spec/images/page_name_browser_version.gif') }
 
   describe '#initialize' do 
     
