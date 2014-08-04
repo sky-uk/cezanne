@@ -39,7 +39,7 @@ module Cezanne
     end
 
     def file_name_for page_name
-      "#{page_name}_#{page.driver.browser.capabilities.browser_name}_#{page.driver.browser.capabilities.version.gsub('.','_')}.gif"
+      "#{page_name}_#{page.driver.browser.capabilities.browser_name}_#{page.driver.browser.capabilities.version}.gif"
     end
 
     def mark_as_new screenshot
