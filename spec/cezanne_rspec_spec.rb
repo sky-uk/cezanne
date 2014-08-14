@@ -44,8 +44,8 @@ describe 'Cezanne RSpec integration', type: :feature, screenshots: true, integra
  
 
     it 'pull reference_screenshots' do 
-      expect(File.exist?('artifacts/reference_screenshots/similar_firefox_31_0.gif')).to be true
-      expect(File.exist?('artifacts/reference_screenshots/different_firefox_31_0.gif')).to be true
+      expect(File.exist?('artifacts/reference_screenshots/similar_firefox_31.0.gif')).to be true
+      expect(File.exist?('artifacts/reference_screenshots/different_firefox_31.0.gif')).to be true
     end
  
   end 
