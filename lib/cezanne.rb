@@ -6,8 +6,8 @@ require "cezanne/comparison"
 
 module Cezanne
 
-  def check_visual_regression_for page_name
-    screenshot = take_screenshot page_name
+  def check_visual_regression_for page_name, opts = {}
+    screenshot = take_screenshot page_name, opts
     reference_screenshot = get_reference_screenshot_for page_name
 
     unless reference_screenshot
@@ -25,10 +25,10 @@ module Cezanne
 
   private 
 
-    def take_screenshot page_name
+    def take_screenshot page_name, opts
       path = File.join( local_files.path_for(:tmp), file_name_for(page_name) )
       page.driver.browser.save_screenshot(path)
-      image(path)
+      image(path, opts)
     end
 
 
@@ -50,7 +50,7 @@ module Cezanne
       FileUtils.mv(screenshot.path, local_files.path_for(:diff))
     end
    
-    def image path 
-      Cezanne::Image.new(path)
+    def image path, opts = {} 
+      Cezanne::Image.new(path, opts)
     end
 end
