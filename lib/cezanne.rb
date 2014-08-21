@@ -23,7 +23,7 @@ module Cezanne
     return true
   end
 
-  private 
+  private
 
     def take_screenshot page_name, opts
       path = File.join( local_files.path_for(:tmp), file_name_for(page_name) )
@@ -39,7 +39,9 @@ module Cezanne
     end
 
     def file_name_for page_name
-      "#{page_name}_#{page.driver.browser.capabilities.browser_name}_#{page.driver.browser.capabilities.version}.gif"
+      browser_name = page.driver.browser.capabilities.browser_name.gsub(/\s+/, "_")
+      browser_version = page.driver.browser.capabilities.version.gsub(/\./, "_")
+      "#{page_name}_#{browser_name}_#{browser_version}.gif"
     end
 
     def mark_as_new screenshot
