@@ -5,7 +5,7 @@ module Cezanne
   class Image
     attr_reader :path, :picture
 
-    def initialize path, opts
+    def initialize path, opts = {}
       @path = path
       @picture = Magick::Image.read(@path).first
       if opts[:crop] 

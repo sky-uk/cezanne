@@ -25,7 +25,7 @@ module Cezanne
 
   private 
 
-    def take_screenshot page_name, opts
+    def take_screenshot page_name, opts = {}
       path = File.join( local_files.path_for(:tmp), file_name_for(page_name) )
       page.driver.browser.save_screenshot(path)
       image(path, opts)
