@@ -214,5 +214,17 @@ describe Cezanne do
       end
 
     end
+
+    context 'accepts options' do
+
+      it 'let you specify a rectangle to crop' do 
+        opts = { crop: [0,0,10,10]}
+        allow(class_with_cezanne).to receive(:spot_differences_between).and_return(false)
+        expect(class_with_cezanne).to receive(:take_screenshot).with(anything, opts).and_call_original
+        expect(class_with_cezanne).to receive(:image).with(anything, opts)
+        class_with_cezanne.check_visual_regression_for('page_name', opts)
+      end
+
+    end 
   end
 end

@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe Cezanne::Image do
 
-  let(:image) { Cezanne::Image.new('spec/images/page_name_browser_version.gif') }
+  let(:image) { Cezanne::Image.new('spec/images/page_name_browser_version.gif', {}) }
+
 
   describe '#initialize' do 
     
@@ -18,7 +19,7 @@ describe Cezanne::Image do
   describe '#width' do
 
     it 'has a width' do
-      expect(image.width).to be 763
+      expect(image.width).to be 712
     end
 
   end
@@ -32,6 +33,10 @@ describe Cezanne::Image do
   end
   
   describe '#crop!' do
+
+    before(:each) do
+      FileUtils.cp('spec/images/page_name_browser_version.gif', 'spec/images/page_name_browser_version.bak')
+    end
 
     it 'accepts 4 parameters x, y, width, height' do
       x = 1
@@ -51,5 +56,15 @@ describe Cezanne::Image do
       expect(image.height).to be 5
     end
 
+    it 'write the cropped image to disk' do
+      expect(image.picture).to receive(:write)
+      image.crop!(10,10)
+    end
+
+    after(:each) do
+      FileUtils.mv('spec/images/page_name_browser_version.bak', 'spec/images/page_name_browser_version.gif', force: true)
+    end
+
   end
+
 end
