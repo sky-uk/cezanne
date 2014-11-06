@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/bskyb-commerce/cezanne.svg?branch=master)](https://travis-ci.org/bskyb-commerce/cezanne)
+[![Build Status](https://travis-ci.org/BSkyB/cezanne.svg?branch=master)](https://travis-ci.org/BSkyB/cezanne)
 
 # Cezanne
 
