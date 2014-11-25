@@ -17,6 +17,7 @@ module Cezanne
     end
 
     if spot_differences_between screenshot, reference_screenshot, diff_shot
+      mark_for_review screenshot, diff_shot
       raise "screenshot for #{page_name} didn't match"
     end
 
@@ -50,8 +51,9 @@ module Cezanne
       FileUtils.mv(screenshot.path, local_files.path_for(:new))
     end
 
-    def mark_for_review screenshot
+    def mark_for_review screenshot, diff_shot
       FileUtils.mv(screenshot.path, local_files.path_for(:diff))
+      FileUtils.mv(diff_shot, local_files.path_for(:diff))
     end
    
     def image path, opts = {} 
