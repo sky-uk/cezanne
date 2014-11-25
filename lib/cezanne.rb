@@ -9,14 +9,14 @@ module Cezanne
   def check_visual_regression_for page_name, opts = {}
     screenshot = take_screenshot page_name, opts
     reference_screenshot = get_reference_screenshot_for page_name
+    diff_shot = File.join(local_files.path_for(:tmp), file_name_for_diff(page_name))
 
     unless reference_screenshot
       mark_as_new screenshot
       raise "new screenshot for #{page_name}"
     end
 
-    if spot_differences_between screenshot, reference_screenshot
-      mark_for_review screenshot
+    if spot_differences_between screenshot, reference_screenshot, diff_shot
       raise "screenshot for #{page_name} didn't match"
     end
 
@@ -40,6 +40,10 @@ module Cezanne
 
     def file_name_for page_name
       "#{page_name}_#{page.driver.browser.capabilities.browser_name}_#{page.driver.browser.capabilities.version}.gif"
+    end
+
+    def file_name_for_diff page_name
+      "#{page_name}_#{page.driver.browser.capabilities.browser_name}_#{page.driver.browser.capabilities.version} diff.gif"
     end
 
     def mark_as_new screenshot

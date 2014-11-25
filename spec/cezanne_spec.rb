@@ -56,11 +56,14 @@ describe Cezanne do
     
     let(:this) { image }
     let(:that) { this.clone }
+    let(:diff) { 'diff.gif' }
+    let(:imagemagick_command) { "compare -dissimilarity-threshold 1 -fuzz 20% -metric AE -highlight-color blue \"#{this.path}\" \"#{that.path}\" \"#{diff}\"" }
 
     before(:each) do
       allow(image).to receive('picture').and_return(picture)
+      allow(image).to receive('path').and_return('a path')
       allow(image).to receive('crop!')
-      allow(picture).to receive('compare_channel').with(picture, Magick::PeakSignalToNoiseRatioMetric).and_return([nil, 1]) 
+      allow(Open3).to receive(:popen3).with(imagemagick_command).and_return(0.0)
       allow(this).to receive('width').and_return(1)
       allow(this).to receive('height').and_return(2)
       allow(that).to receive('width').and_return(2)
@@ -70,14 +73,14 @@ describe Cezanne do
     it 'crop images to min width and height' do 
       expect(this).to receive('crop!').with(1,1)
       expect(that).to receive('crop!').with(1,1)
-      class_with_cezanne.send(:spot_differences_between, this, that)
+      class_with_cezanne.send(:spot_differences_between, this, that, diff)
     end
   
     context 'similar images' do
       
       it 'return false' do
-        expect(this.picture).to receive('compare_channel').and_return([nil, Cezanne::SIMILARITY_THRESHOLD + 1]) 
-        expect(class_with_cezanne.send(:spot_differences_between, this, that)).to be false 
+        expect(Open3).to receive(:popen3).with(imagemagick_command).and_return(0.0)
+        expect(class_with_cezanne.send(:spot_differences_between, this, that, diff)).to be false 
       end
     
     end
@@ -85,8 +88,8 @@ describe Cezanne do
     context 'different images' do
       
       it 'return true' do
-        expect(this.picture).to receive('compare_channel').and_return([nil, Cezanne::SIMILARITY_THRESHOLD - 1]) 
-        expect(class_with_cezanne.send(:spot_differences_between, this, that)).to be true 
+        expect(Open3).to receive(:popen3).with(imagemagick_command).and_return(1.0)
+        expect(class_with_cezanne.send(:spot_differences_between, this, that, diff)).to be true 
       end
     
     end
