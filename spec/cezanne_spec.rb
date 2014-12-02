@@ -58,7 +58,7 @@ describe Cezanne do
     let(:that) { this.clone }
 
     before(:each) do
-      allow(image).to receive('picture').and_return(picture)
+      allow(image).to receive('duplicate?')
       allow(image).to receive('crop!')
       allow(picture).to receive('compare_channel').with(picture, Magick::PeakSignalToNoiseRatioMetric).and_return([nil, 1]) 
       allow(this).to receive('width').and_return(1)
@@ -76,7 +76,7 @@ describe Cezanne do
     context 'similar images' do
       
       it 'return false' do
-        expect(this.picture).to receive('compare_channel').and_return([nil, Cezanne::SIMILARITY_THRESHOLD + 1]) 
+        expect(this).to receive('duplicate?').and_return(true) 
         expect(class_with_cezanne.send(:spot_differences_between, this, that)).to be false 
       end
     
@@ -85,7 +85,7 @@ describe Cezanne do
     context 'different images' do
       
       it 'return true' do
-        expect(this.picture).to receive('compare_channel').and_return([nil, Cezanne::SIMILARITY_THRESHOLD - 1]) 
+        expect(this).to receive('duplicate?').and_return(false) 
         expect(class_with_cezanne.send(:spot_differences_between, this, that)).to be true 
       end
     

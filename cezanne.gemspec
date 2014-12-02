@@ -27,4 +27,5 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "rmagick"
   spec.add_dependency "dropscreen"
+  spec.add_dependency "phashion"
 end

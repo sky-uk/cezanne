@@ -22,6 +22,21 @@ module Cezanne
 
     return true
   end
+ 
+  def self.configuration
+    Struct.new('Configuration', :comparison) do
+      def comparison 
+        :phash_hamming_distance
+      end
+    end
+  end
+
+  def self.config
+    @config ||= self.configuration 
+    yield @config if block_given?  
+
+    @config
+  end
 
   private 
 
