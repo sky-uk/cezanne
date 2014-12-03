@@ -1,10 +1,12 @@
 require "cezanne/version"
+require "cezanne/config"
 require "cezanne/local_files"
 require "cezanne/remote_files"
 require "cezanne/image"
 require "cezanne/comparison"
 
 module Cezanne
+  
 
   def check_visual_regression_for page_name, opts = {}
     screenshot = take_screenshot page_name, opts
@@ -21,21 +23,6 @@ module Cezanne
     end
 
     return true
-  end
- 
-  def self.configuration
-    Struct.new('Configuration', :comparison) do
-      def comparison 
-        :phash_hamming_distance
-      end
-    end
-  end
-
-  def self.config
-    @config ||= self.configuration 
-    yield @config if block_given?  
-
-    @config
   end
 
   private 

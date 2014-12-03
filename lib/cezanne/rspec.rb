@@ -11,6 +11,16 @@ RSpec.configure do |config|
       project_name = config.cezanne[:project_name]
       config.cezanne[:local_files] = Cezanne::LocalFiles.new(uid, 'artifacts')
       config.cezanne[:remote_files] = Cezanne::RemoteFiles.new(uid, project_name)
+      config.cezanne[:conf] = Cezanne::Config.new
+
+      module Cezanne 
+        
+        def self.config 
+          RSpec.configuration.cezanne[:conf]
+        end
+
+      end
+
       begin
         config.cezanne[:remote_files].pull(:ref, config.cezanne[:local_files].path_for(:ref))
       rescue 

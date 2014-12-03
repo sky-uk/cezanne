@@ -29,9 +29,8 @@ module Cezanne
       @picture.rows
     end
 
-
     def duplicate? other
-      send(Cezanne.config.comparison, other)
+      send(Cezanne.config.comparison_method, other)
     end
 
     alias_method :==, :duplicate?

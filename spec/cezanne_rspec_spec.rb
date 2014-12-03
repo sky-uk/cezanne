@@ -1,8 +1,6 @@
 require 'cezanne/rspec'
 require 'capybara/rspec'
 require 'selenium-webdriver'
-require 'pry'
-
 
 Capybara.app = Rack::Directory.new('spec/images')
 Capybara.default_driver = :selenium
