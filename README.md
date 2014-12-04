@@ -26,10 +26,15 @@ In your spec_helper.rb
     
     RSpec.configure do |config|
       config.include Cezanne
-      config.cezanne = { uid: ENV['build_number'], project_name: 'awesome_app' }
     end
 
-The uid should be a unique identifier. We use the build number, but it can be a static string if you don't need
+    Cezanne.configure do |config|
+      config.uid = ENV['build_number']
+      config.project_name = 'awesome_app'
+      config.comparison_method = :phash_hamming_distance (default)| :peak_signal_to_noise_ratio 
+    end
+
+The should be a unique identifier. We use the build number, but it can be a static string if you don't need
 to keep multiple versions of the screenshots.
 
 In your tests
@@ -48,7 +53,7 @@ and the browser name & version, to make it easy to check visual regressions on m
 
 ## Dependencies
 
-Cezanne uses ImageMagick to compare images. Check with your package manager.
+Cezanne uses ImageMagick. Check with your package manager.
 
 Screenshots are stored on Dropbox through the Dropscreen gem. Follow the instructions at https://github.com/bskyb-commerce/dropscreen and make sure to export the access_token
 
