@@ -12,7 +12,7 @@ describe Cezanne::Image do
     end
 
     it 'return an error if there is no file at path' do
-      expect { Cezanne::Image.new('unexistent_file_path') }.to raise_error
+      expect { Cezanne::Image.new('inexistent_file_path') }.to raise_error
     end
   end
   
@@ -67,4 +67,33 @@ describe Cezanne::Image do
 
   end
 
+  describe '#duplicate?' do 
+    let(:other_image) { double('Cezanne::Image') }
+
+    it 'compare two images' do 
+      Cezanne.config.comparison_method = :comparison_method
+      allow(image).to receive(:comparison_method)
+      expect(image).to receive(:comparison_method).with(other_image)
+      image.duplicate? other_image
+    end 
+
+    it 'can use peak signal to noise ratio' do 
+      Cezanne.config.comparison_method = :peak_signal_to_noise_ratio
+      Cezanne.config.similarity_threshold = 42
+
+      allow(other_image).to receive(:picture)
+      expect(image.picture).to receive(:compare_channel).with(other_image.picture, Magick::PeakSignalToNoiseRatioMetric).and_return([nil, 10])
+      image.duplicate? other_image
+    end
+
+    it 'can use phash hamming distance' do 
+      Cezanne.config.comparison_method = :phash_hamming_distance
+      Cezanne.config.similarity_threshold = 15
+
+      allow(other_image).to receive(:path)
+      expect_any_instance_of(Phashion::Image).to receive(:duplicate?)
+      image.duplicate? other_image
+    end
+
+  end
 end

@@ -1,4 +1,5 @@
 require 'RMagick'
+require 'phashion'
 
 module Cezanne
 
@@ -27,6 +28,23 @@ module Cezanne
     def height
       @picture.rows
     end
-  end
 
+    def duplicate? other
+      send(Cezanne.config.comparison_method, other)
+    end
+
+    alias_method :==, :duplicate?
+    
+    private 
+
+      def peak_signal_to_noise_ratio other
+        @picture.compare_channel(other.picture, Magick::PeakSignalToNoiseRatioMetric)[1] > Cezanne.config.similarity_threshold
+      end 
+
+      def phash_hamming_distance other 
+        Phashion::Image.new(@path).duplicate? Phashion::Image.new(other.path), threshold: Cezanne.config.similarity_threshold
+      end 
+
+  end
+ 
 end

@@ -19,3 +19,4 @@ artifacts
 *.swp
 .DS_Store
 .env
+.rspec

@@ -1,10 +1,12 @@
 require "cezanne/version"
+require "cezanne/config"
 require "cezanne/local_files"
 require "cezanne/remote_files"
 require "cezanne/image"
 require "cezanne/comparison"
 
 module Cezanne
+  
 
   def check_visual_regression_for page_name, opts = {}
     screenshot = take_screenshot page_name, opts

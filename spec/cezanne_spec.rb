@@ -2,7 +2,16 @@ require 'spec_helper'
 
 describe Cezanne do
 
-  let(:class_with_cezanne) { Class.include(Cezanne).new }
+  let(:class_with_cezanne) { 
+    Cezanne.configure do |config| 
+      config.uid = 'test'
+      config.project_name = 'cezanne' 
+      config.local_files = 'mock'
+      config.remote_files = 'mock'
+    end
+    Class.include(Cezanne).new 
+  }
+
   # Capybara mocks
   let(:page) { double('page') }
   let(:driver) { double('driver') }
@@ -25,6 +34,45 @@ describe Cezanne do
     allow(class_with_cezanne).to receive('page').and_return(page)
     allow(class_with_cezanne).to receive('local_files').and_return(local_files) 
     allow(class_with_cezanne).to receive('image').and_return(image)
+  end
+
+  describe '#configure' do 
+
+    it 'can be configured with a block' do 
+
+      Cezanne.configure do |config|
+        config.uid = 'uid'
+        config.project_name = 'project_name'
+        config.local_root = 'local_root'
+        config.remote_root = 'remote_root'
+        config.local_files = 'local_files'
+        config.remote_files = 'remote_files'
+        config.comparison_method = 'comparison_method'
+        config.similarity_threshold = 'similarity_threshold'
+      end
+      
+      expected_config = Cezanne::Config.new('uid', 'project_name', 'local_root', 'remote_root', 'local_files', 'remote_files', 'comparison_method', 'similarity_threshold')
+
+      expect(Cezanne.config).to eq(expected_config)
+    end
+
+    it 'local_files helper' do
+
+      Cezanne.configure do |config| 
+        config.local_files = 'local_files'
+      end  
+
+      expect(Class.include(Cezanne).new.send(:local_files)).to eq 'local_files'
+    end
+
+    it 'remote_files helper' do
+
+      Cezanne.configure do |config| 
+        config.remote_files = 'remote_files'
+      end  
+
+      expect(Class.include(Cezanne).new.send(:remote_files)).to eq 'remote_files'
+    end
   end
 
   describe '#take_screenshot' do
@@ -58,9 +106,9 @@ describe Cezanne do
     let(:that) { this.clone }
 
     before(:each) do
-      allow(image).to receive('picture').and_return(picture)
+      allow(image).to receive('duplicate?')
       allow(image).to receive('crop!')
-      allow(picture).to receive('compare_channel').with(picture, Magick::PeakSignalToNoiseRatioMetric).and_return([nil, 1]) 
+      allow(picture).to receive('duplicate?').with(picture).and_return(true) 
       allow(this).to receive('width').and_return(1)
       allow(this).to receive('height').and_return(2)
       allow(that).to receive('width').and_return(2)
@@ -76,7 +124,7 @@ describe Cezanne do
     context 'similar images' do
       
       it 'return false' do
-        expect(this.picture).to receive('compare_channel').and_return([nil, Cezanne::SIMILARITY_THRESHOLD + 1]) 
+        expect(this).to receive('duplicate?').and_return(true) 
         expect(class_with_cezanne.send(:spot_differences_between, this, that)).to be false 
       end
     
@@ -85,7 +133,7 @@ describe Cezanne do
     context 'different images' do
       
       it 'return true' do
-        expect(this.picture).to receive('compare_channel').and_return([nil, Cezanne::SIMILARITY_THRESHOLD - 1]) 
+        expect(this).to receive('duplicate?').and_return(false) 
         expect(class_with_cezanne.send(:spot_differences_between, this, that)).to be true 
       end
     
@@ -158,6 +206,11 @@ describe Cezanne do
 
     before(:each) do
       allow(class_with_cezanne).to receive('get_reference_screenshot_for').and_return(Cezanne::Image.new('spec/images/page_name_browser_version.gif'))
+
+      Cezanne.configure do |config|
+        config.comparison_method = :peak_signal_to_noise_ratio
+        config.similarity_threshold = 42
+      end
     end
 
     context 'succesful match' do
