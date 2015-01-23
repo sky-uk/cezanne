@@ -79,6 +79,8 @@ describe Cezanne::Image do
 
     it 'can use peak signal to noise ratio' do 
       Cezanne.config.comparison_method = :peak_signal_to_noise_ratio
+      Cezanne.config.similarity_threshold = 42
+
       allow(other_image).to receive(:picture)
       expect(image.picture).to receive(:compare_channel).with(other_image.picture, Magick::PeakSignalToNoiseRatioMetric).and_return([nil, 10])
       image.duplicate? other_image
@@ -86,6 +88,8 @@ describe Cezanne::Image do
 
     it 'can use phash hamming distance' do 
       Cezanne.config.comparison_method = :phash_hamming_distance
+      Cezanne.config.similarity_threshold = 15
+
       allow(other_image).to receive(:path)
       expect_any_instance_of(Phashion::Image).to receive(:duplicate?)
       image.duplicate? other_image

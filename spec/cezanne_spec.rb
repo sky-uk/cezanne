@@ -8,7 +8,6 @@ describe Cezanne do
       config.project_name = 'cezanne' 
       config.local_files = 'mock'
       config.remote_files = 'mock'
-      config.comparison_method = :phash_hamming_distance
     end
     Class.include(Cezanne).new 
   }
@@ -49,9 +48,10 @@ describe Cezanne do
         config.local_files = 'local_files'
         config.remote_files = 'remote_files'
         config.comparison_method = 'comparison_method'
+        config.similarity_threshold = 'similarity_threshold'
       end
       
-      expected_config = Cezanne::Config.new('uid', 'project_name', 'local_root', 'remote_root', 'local_files', 'remote_files', 'comparison_method')
+      expected_config = Cezanne::Config.new('uid', 'project_name', 'local_root', 'remote_root', 'local_files', 'remote_files', 'comparison_method', 'similarity_threshold')
 
       expect(Cezanne.config).to eq(expected_config)
     end
@@ -206,6 +206,11 @@ describe Cezanne do
 
     before(:each) do
       allow(class_with_cezanne).to receive('get_reference_screenshot_for').and_return(Cezanne::Image.new('spec/images/page_name_browser_version.gif'))
+
+      Cezanne.configure do |config|
+        config.comparison_method = :peak_signal_to_noise_ratio
+        config.similarity_threshold = 42
+      end
     end
 
     context 'succesful match' do
