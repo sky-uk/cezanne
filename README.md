@@ -31,7 +31,6 @@ In your spec_helper.rb
     Cezanne.configure do |config|
       config.uid = ENV['build_number']
       config.project_name = 'awesome_app'
-      config.comparison_method = :phash_hamming_distance (default)| :peak_signal_to_noise_ratio 
     end
 
 The should be a unique identifier. We use the build number, but it can be a static string if you don't need
