@@ -22,6 +22,10 @@ module Cezanne
       @adapter.push path, @remote_folders[key]
     end
 
+    def exists? key
+      @adapter.exists? @remote_folders[key]
+    end
+
   end
 
 end

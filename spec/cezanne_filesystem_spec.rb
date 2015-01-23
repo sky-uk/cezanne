@@ -71,5 +71,15 @@ describe Cezanne::RemoteFiles do
     end 
   end
   
+  describe '#exists?' do 
+
+    it 'is a proxy to Dropscreen::Client#exists?' do
+      expect(dropscreen_client).to receive(:exists?).at_least(1).times.with(kind_of(String))  
+      [:ref, :diff, :new].each do |key|
+        @remote_files.exists? key 
+      end
+    end 
+
+  end  
 end
 
