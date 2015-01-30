@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["skyhaikuteam@gmail.com"]
   spec.summary       = %q{Visual regression testing tool}
   spec.description   = %q{Let Cezanne help you make sure your views look alright}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/BSkyB/cezanne"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
@@ -28,4 +28,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "rmagick"
   spec.add_dependency "dropscreen"
   spec.add_dependency "phashion"
+
+  spec.post_install_message = "Cezanne uses ImageMagick. Check with your package manager (using brew? $ brew install imagemagick)"
 end
