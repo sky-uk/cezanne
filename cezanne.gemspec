@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.summary       = %q{Visual regression testing tool}
   spec.description   = %q{Let Cezanne help you make sure your views look alright}
   spec.homepage      = "https://github.com/BSkyB/cezanne"
-  spec.license       = "MIT"
+  spec.license       = "BSD"
 
   spec.files         = `git ls-files -z`.split("\x0")
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
