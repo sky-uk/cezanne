@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/BSkyB/cezanne.svg?branch=master)](https://travis-ci.org/BSkyB/cezanne)
+[![Coverage Status](https://coveralls.io/repos/BSkyB/cezanne/badge.svg?branch=master)](https://coveralls.io/r/BSkyB/cezanne?branch=master)
 
 # Cezanne
 
