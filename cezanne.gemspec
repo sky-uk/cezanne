@@ -28,6 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "rmagick"
   spec.add_dependency "dropscreen"
   spec.add_dependency "phashion"
+  spec.add_dependency "coveralls"
 
   spec.post_install_message = "Cezanne uses ImageMagick. Check with your package manager (using brew? $ brew install imagemagick)"
 end
