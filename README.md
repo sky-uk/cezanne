@@ -21,7 +21,7 @@ Or install it yourself as:
 
 ## Usage - RSpec
 
-In your spec_helper.rb
+In your `spec_helper.rb`
     
     require 'cezanne/rspec'
     
@@ -34,7 +34,7 @@ In your spec_helper.rb
       config.project_name = 'awesome_app'
     end
 
-The should be a unique identifier. We use the build number, but it can be a static string if you don't need
+The `uid` should be a unique identifier. We use the build number, but it can be a static string if you don't need
 to keep multiple versions of the screenshots.
 
 In your tests
@@ -55,7 +55,8 @@ and the browser name & version, to make it easy to check visual regressions on m
 
 Cezanne uses ImageMagick. Check with your package manager.
 
-Screenshots are stored on Dropbox through the Dropscreen gem. Follow the instructions at https://github.com/bskyb-commerce/dropscreen and make sure to export the access_token
+Screenshots are stored on Dropbox. Follow the instructions at https://www.dropbox.com/developers/core and 
+export your oAuth access token
 
     export DROPBOX_ACCESS_TOKEN=**insert dropbox access token here**
 
@@ -84,14 +85,23 @@ Screenshots are taken using Capybara.
         ...
     ```
 
+## Tests
+
+To run the specs
+
+1. clone the repo `git clone git@github.com:BSkyB/cezanne.git`
+2. cd into it `cd cezanne`
+3. install deps `gem install bundler && bundle install`
+4. run the specs `rspec`
+
+(integration tests use Firefox by default)
+
 ## Contributing
 
-1. Fork it ( http://github.com/<my-github-username>/cezanne/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+Fork, improve and Pull Request :)
 
 ## Authors
 
 Made with <3 by the Sky Haiku team
+
+Got questions? Ask Ben (ben.stokoe@sky.uk) or Andrea (andrea.pigato@sky.uk)
