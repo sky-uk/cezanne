@@ -1,9 +1,9 @@
-[![Build Status](https://travis-ci.org/BSkyB/cezanne.svg?branch=master)](https://travis-ci.org/BSkyB/cezanne)
-[![Coverage Status](https://coveralls.io/repos/BSkyB/cezanne/badge.svg?branch=master)](https://coveralls.io/r/BSkyB/cezanne?branch=master)
+[![Build Status](https://travis-ci.org/sky-uk/cezanne.svg?branch=master)](https://travis-ci.org/sky-uk/cezanne)
+[![Coverage Status](https://coveralls.io/repos/sky-uk/cezanne/badge.svg?branch=master&service=github)](https://coveralls.io/github/sky-uk/cezanne?branch=master)
 
 # Cezanne
 
-Visual regression testing tool
+Cross-browser visual regression testing tool
 
 ## Installation
 
@@ -19,7 +19,8 @@ Or install it yourself as:
 
     $ gem install cezanne
 
-## Usage - RSpec
+## Usage 
+### RSpec
 
 In your `spec_helper.rb`
     
@@ -48,19 +49,20 @@ In your tests
     end
 
 Make sure to use a unique name for each screenshot. 
-The associate file will be a gif image named after the parameter ('mont-sainte-victoire' in the example above)
+The associate file will be a gif image named after the parameter (`'mont-sainte-victoire'` in the example above)
 and the browser name & version, to make it easy to check visual regressions on multiple browsers.
 
 ## Dependencies
 
 Cezanne uses ImageMagick. Check with your package manager.
 
-Screenshots are stored on Dropbox. Follow the instructions at https://www.dropbox.com/developers/core and 
+Screenshots are taken using Capybara and its configured driver (local, headless, remote) as long as it supports screenshots.
+
+Screenshots images (`.gif`) are stored on Dropbox. Follow the instructions at https://www.dropbox.com/developers/core and 
 export your oAuth access token
 
     export DROPBOX_ACCESS_TOKEN=**insert dropbox access token here**
 
-Screenshots are taken using Capybara.
 
 ## (Opinionated) Workflow
 
@@ -89,7 +91,7 @@ Screenshots are taken using Capybara.
 
 To run the specs
 
-1. clone the repo `git clone git@github.com:BSkyB/cezanne.git`
+1. clone the repo `git clone git@github.com:sky-uk/cezanne.git`
 2. cd into it `cd cezanne`
 3. install deps `gem install bundler && bundle install`
 4. run the specs `rspec`
