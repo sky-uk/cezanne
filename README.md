@@ -98,12 +98,8 @@ To run the specs
 
 (integration tests use Firefox by default)
 
-## Contributing
-
-Fork, improve and Pull Request :)
-
 ## Authors
 
 Made with <3 by the Sky Haiku team
 
-Got questions? Ask Ben (ben.stokoe@sky.uk) or Andrea (andrea.pigato@sky.uk)
+Got questions? Ask Ben ([@benstokoe](https://github.com/benstokoe)) or Andrea ([@pigats](https://github.com/pigats), andrea.pigato@sky.uk)
