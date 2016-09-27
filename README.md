@@ -98,10 +98,6 @@ To run the specs
 
 (integration tests use Firefox by default)
 
-## Contributing
-
-Fork, improve and Pull Request :)
-
 ## Authors
 
 Made with <3 by the Sky Haiku team
