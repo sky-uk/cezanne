@@ -102,4 +102,4 @@ To run the specs
 
 Made with <3 by the Sky Haiku team
 
-Got questions? Ask Ben ([@benstokoe](https://github.com/benstokoe)) or Andrea ([@pigats](https://github.com/pigats), andrea.pigato@sky.uk)
+Got questions? Ask Ben ([@benstokoe](https://github.com/benstokoe)) or Andrea ([@pigats](https://github.com/pigats))
